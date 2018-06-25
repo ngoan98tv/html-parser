@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:html_parser/controller/infoDialog.dart';
-
+import 'package:html_parser/view/result.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +8,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final inputControll = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -25,13 +27,32 @@ class _HomePageState extends State<HomePage> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              new TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter an URL to parse'
-                ),
-                autofocus: true,
-                
-              )
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Expanded(
+                    child: new TextField(
+                      decoration:
+                          InputDecoration(hintText: 'Enter an URL to parse'),
+                      autofocus: true,
+                      controller: inputControll,
+                    ),
+                  ),
+                  new IconButton(
+                    icon: new Icon(
+                      Icons.send,
+                      color: Colors.green,
+                      size: 32.0,
+                    ),
+                    onPressed: (){
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => Result(url: inputControll.text)
+                      ));
+                    },
+                  )
+                ],
+              ),
             ],
           ),
         ));
@@ -39,10 +60,9 @@ class _HomePageState extends State<HomePage> {
 
   void _showAppInfo() {
     showDialog(
-      context: context,
-      builder: (context){
-        return infoDialog(context);
-      }
-    );
+        context: context,
+        builder: (context) {
+          return infoDialog(context);
+        });
   }
 }
