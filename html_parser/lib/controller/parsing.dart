@@ -32,9 +32,24 @@ class _ParsingState extends State<Parsing> {
             return new LinearProgressIndicator();
           default:
             if (snapshot.hasError)
-              return new Text(
-                'Error: ${snapshot.error}',
-                style: new TextStyle(color: Colors.redAccent),
+              return new Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Container(height: 100.0,),
+                  new Icon(Icons.warning, size: 68.0, color: Colors.red),
+                  new Text(
+                    'Error: ${snapshot.error}',
+                    style: new TextStyle(color: Colors.redAccent),
+                  ),
+                  new Container(height: 100.0,),
+                  new RaisedButton(
+                    child: new Text('TRY AGAIN'),
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
               );
             else
               return new TabBarView(
@@ -50,7 +65,6 @@ class _ParsingState extends State<Parsing> {
                     children: <Widget>[headersRender(snapshot.data.headers)],
                   ),
                   new ListView(
-                    shrinkWrap: true,
                     padding: EdgeInsets.all(16.0),
                     children: <Widget>[new Text(snapshot.data.body)],
                   )

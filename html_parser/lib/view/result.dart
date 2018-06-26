@@ -24,7 +24,7 @@ class _ResultState extends State<Result> {
             ),
             bottom: TabBar(
           tabs: <Widget>[
-            Tab(text: 'Menu'),
+            Tab(text: 'Links'),
             Tab(text: 'Headers'),
             Tab(text: 'HTML')
           ],

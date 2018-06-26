@@ -27,28 +27,54 @@ class _HomePageState extends State<HomePage> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              new Container(height: 16.0),
+              new Text('Enter a web address to parse:',
+                  style: new TextStyle(fontSize: 16.0)),
+              new TextField(
+                decoration: InputDecoration(hintText: 'http://example.com'),
+                keyboardType: TextInputType.url,
+                autofocus: true,
+                controller: inputControll,
+                onSubmitted: (url){
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Result(url: url)));
+                },
+              ),
+              new Container(height: 25.0),
               new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  new Expanded(
-                    child: new TextField(
-                      decoration:
-                          InputDecoration(hintText: 'Enter an URL to parse'),
-                      autofocus: true,
-                      controller: inputControll,
-                    ),
+                  new OutlineButton(
+                    child: new Text('http://'),
+                    borderSide: BorderSide(color: Colors.green),
+                    onPressed: () {
+                      inputControll.text = 'http://';
+                      // move cursor to end of text
+                      inputControll.selection = TextSelection.fromPosition(
+                          new TextPosition(offset: inputControll.text.length));
+                    },
                   ),
-                  new IconButton(
-                    icon: new Icon(
-                      Icons.send,
-                      color: Colors.green,
-                      size: 32.0,
-                    ),
-                    onPressed: (){
+                  new Container(width: 6.0),
+                  new OutlineButton(
+                    child: new Text('CLEAR'),
+                    borderSide: BorderSide(color: Colors.green),
+                    onPressed: () {
+                      inputControll.text = '';
+                    },
+                  ),
+                  new Container(width: 6.0),
+                  new RaisedButton(
+                    child: new Text('DONE'),
+                    color: Colors.green,
+                    onPressed: () {
                       Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => Result(url: inputControll.text)
-                      ));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Result(url: inputControll.text)));
                     },
                   )
                 ],
